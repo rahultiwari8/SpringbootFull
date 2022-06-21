@@ -1,5 +1,11 @@
 package com.codewithdurgesh.blog.payloads;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,10 +15,19 @@ import lombok.Setter;
 @Setter
 public class UserDto {
 	
+	
 	private int id;
+	@NotEmpty
+	@Size(min = 4 , message = "username must be greater than 4 characters")
 	private String name;
+	
+	@Email(message = "Email Address is not valid")
 	private String email;
+	
+	@NotEmpty
+	@Size(min = 4, max =15,message = "password must be greater than 3 and max will be 15 characters")
 	private String password;
+	
 	public int getId() {
 		return id;
 	}
@@ -43,6 +58,7 @@ public class UserDto {
 	public void setAbout(String about) {
 		this.about = about;
 	}
+	@NotEmpty
 	private String about;
 
 }

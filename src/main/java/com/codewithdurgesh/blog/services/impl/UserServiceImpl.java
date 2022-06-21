@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
@@ -20,6 +21,9 @@ import com.codewithdurgesh.blog.services.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	public UserDto createuser(UserDto userdto) {
@@ -72,24 +76,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User userDtotoUser(UserDto dto) {
-		User user = new User();
-		user.setName(dto.getEmail());
-		user.setPassword(dto.getPassword());
-		user.setId(dto.getId());
-		user.setEmail(dto.getEmail());
-		user.setAbout(dto.getAbout());
+		User user = this.modelMapper.map(dto, User.class);
+		
+		/*
+		 * user.setName(dto.getEmail()); user.setPassword(dto.getPassword());
+		 * user.setId(dto.getId()); user.setEmail(dto.getEmail());
+		 * user.setAbout(dto.getAbout());
+		 */
 
 		return user;
 	}
 
 	public UserDto userToUserDto(User user) {
-		UserDto userDto = new UserDto();
-		userDto.setName(user.getEmail());
-		userDto.setPassword(user.getPassword());
-		userDto.setId(user.getId());
-		userDto.setEmail(user.getEmail());
-		userDto.setAbout(user.getAbout());
-
+		UserDto userDto = this.modelMapper.map(user, UserDto.class);
+		
+		
 		return userDto;
 	}
 
